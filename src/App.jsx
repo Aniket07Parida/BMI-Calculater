@@ -1,23 +1,47 @@
-import twitter from './assets/Twitter.png'
-import google from './assets/googleIcon.png'
-import iphone from './assets/AppleLog.png'
-import Button from './Button'
-import Input from './input'
-import NextButton from './NextButton'
-import ForgrtPassword from './forgetButton'
+import { useRef, useState } from "react";
+import InputText from "./inputText"
+import DeleteButton from "./Button";
+
 
 export default function App() {
+
+  const text = useRef('');
+
+  const [Characters, setCharacter] = useState(0);
+  const [Sentences, setSentences] = useState(0);
+
+  const handelChanges = () => {
+    const value = text.current.value;
+    setCharacter(value.length);
+    setSentences(value.split(/[.!?]+/).filter(Boolean).length)
+  };
+
+  const handelDelete=()=>{
+    text.current.value = '';
+    setCharacter(0);
+    setSentences(0);
+  }
+
   return (
-    <div className='w-[400px] h-[500px] bg-stone-200 shadow-2xl ml-[30%] mt-[10%] rounded-md p-2 block'>
-      <img src={twitter} alt="Twitter Logo" className='w-10 ml-40 mt-5' />
-      <h1 className='text-2xl font-bold ml-20'>Sign in to Twitter</h1>
-      <Button image={google} children={"Sign in with Google"} />
-      <Button image={iphone} children={"Sign in with Apple"} />
-      <hr className='my-4 w-76 mx-10' />
-      <Input text={"Phone email or UserName"} />
-      <NextButton ButtonName={"Next"} />
-      <ForgrtPassword buttonText={"Forgot Password"} />
-      <p className='font-bold mt-6 ml-16'>Don't have an account <a href="/signup" className="text-blue-500 font-bold">Sign up</a></p>
+    <div className="block">
+    <div className="flex ml-[10%] mt-[10%]">
+      <InputText text={"Type or post your text here......."} onChange={handelChanges} ref={text} />
+      <div className="w-[300px] h-[200px] border-2 bg-white ml-2 rounded-md">
+        <h1 className="text-2xl font-bold ml-24">Result</h1>
+        <div className="flex ml-10">
+          <div>
+            <h3 className="text-[1rem] font-bold mt-8">Characters</h3>
+            <p className="ml-8 text-2xl font-bold">{Characters}</p> 
+            </div>
+            <div className="ml-9 ">
+            <h3 className="text-[1rem] font-bold mt-8">Sentences</h3>
+            <p className="ml-8 font-bold text-2xl">{Sentences}</p> 
+            </div>
+          </div>
+        </div>
+      </div>
+      <DeleteButton ButtonName={"Delete"} onDelete={handelDelete} />
     </div>
+    
   )
 }

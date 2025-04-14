@@ -1,9 +1,7 @@
-
-
-export default function Button({ children, image }) {
+export default function DeleteButton({ButtonName,onDelete}) {
     return (
-        <div className="ml-10 mt-5">
-            <button type="submit" className="text-xs border border-black p-1 rounded-2xl flex justify-center items-center w-[300px]"><img src={image} alt="my-icons" className="w-3.5 mr-2" /> {children}</button>
+        <div>
+            <button type="submit" className="bg-red-500 text-white rounded px-4 py-2 ml-40 mt-7" onClick={onDelete}>{ButtonName}</button>
         </div>
     )
-} 
+}
